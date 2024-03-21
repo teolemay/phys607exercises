@@ -4,6 +4,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from astroML.datasets import sdss_corrected_spectra
+from sklearn.decomposition import PCA
 
 #%%
 
@@ -39,7 +40,7 @@ print(np.mean(rescaled))
 
 # %%
 
-def PCA(rescaled_data):
+def pca(rescaled_data):
     '''
     Principal Components Analysis
 
@@ -68,7 +69,7 @@ def PCA(rescaled_data):
     return ei_vals, ei_vecs, projected
 
 
-ei_vals, ei_vecs, projected = PCA(rescaled)
+ei_vals, ei_vecs, projected = pca(rescaled)
 
 total_variance = np.sum(ei_vals)
 variance_ratio = ei_vals / total_variance
@@ -185,36 +186,36 @@ n_comp=1
 reconstructed = reconstruct(projected[:, :n_comp], ei_vecs[:n_comp, :], avg_spectra)
 
 
-plt.plot(wavelength, reconstructed.T, linewidth=0.2)
+plt.plot(wavelength, reconstructed.T, linewidth=0.2, alpha=0.5)
 plt.title('reconstructed data; '+ str(n_comp)+' PCs')
 plt.show()
 
 # %%
 
-# pca = PCA()
-# pca.fit(rescaled)
-# comp = pca.transform(rescaled)
+pca = PCA()
+pca.fit(rescaled)
+comp = pca.transform(rescaled)
 
-# mean = pca.mean_
-# components = pca.components_
-# evals = pca.explained_variance_ratio_
-# evals_cs = evals.cumsum()
+mean = pca.mean_
+components = pca.components_
+evals = pca.explained_variance_ratio_
+evals_cs = evals.cumsum()
 
-# fig = plt.figure(figsize=(10, 7.5))
-# fig.subplots_adjust(hspace=0.05, bottom=0.12)
+fig = plt.figure(figsize=(10, 7.5))
+fig.subplots_adjust(hspace=0.05, bottom=0.12)
 
-# ax = fig.add_subplot(211, xscale='log', yscale='log')
-# ax.grid()
-# ax.plot(evals, c='k')
-# ax.set_ylabel('Normalized Eigenvalues')
-# ax.xaxis.set_major_formatter(plt.NullFormatter())
-# # ax.set_ylim(5E-4, 100)
+ax = fig.add_subplot(211, xscale='log', yscale='log')
+ax.grid()
+ax.plot(evals, c='k')
+ax.set_ylabel('Normalized Eigenvalues')
+ax.xaxis.set_major_formatter(plt.NullFormatter())
+# ax.set_ylim(5E-4, 100)
 
-# ax = fig.add_subplot(212, xscale='log')
-# ax.grid()
-# ax.semilogx(evals_cs, color='k')
-# ax.set_xlabel('Eigenvalue Number')
-# ax.set_ylabel('Cumulative Eigenvalues')
-# # ax.set_ylim(0.65, 1.00)
+ax = fig.add_subplot(212, xscale='log')
+ax.grid()
+ax.semilogx(evals_cs, color='k')
+ax.set_xlabel('Eigenvalue Number')
+ax.set_ylabel('Cumulative Eigenvalues')
+# ax.set_ylim(0.65, 1.00)
 
-# plt.show()
+plt.show()
