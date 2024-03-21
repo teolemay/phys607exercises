@@ -4,7 +4,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from astroML.datasets import sdss_corrected_spectra
-from sklearn.decomposition import PCA
+
 
 #%%
 
@@ -191,6 +191,7 @@ plt.title('reconstructed data; '+ str(n_comp)+' PCs')
 plt.show()
 
 # %%
+from sklearn.decomposition import PCA
 
 pca = PCA()
 pca.fit(rescaled)
@@ -209,13 +210,13 @@ ax.grid()
 ax.plot(evals, c='k')
 ax.set_ylabel('Normalized Eigenvalues')
 ax.xaxis.set_major_formatter(plt.NullFormatter())
-# ax.set_ylim(5E-4, 100)
+ax.set_xlim(1, 1000)
 
 ax = fig.add_subplot(212, xscale='log')
 ax.grid()
 ax.semilogx(evals_cs, color='k')
 ax.set_xlabel('Eigenvalue Number')
 ax.set_ylabel('Cumulative Eigenvalues')
-# ax.set_ylim(0.65, 1.00)
+ax.set_xlim(1, 1000)
 
 plt.show()
