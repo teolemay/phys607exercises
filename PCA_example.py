@@ -119,6 +119,8 @@ plt.show()
 
 #%% PCP
 
+z = data['z']
+
 PC_index_1 = 0
 PC_index_2 = 1
 
@@ -127,11 +129,15 @@ plt.scatter(projected[:,PC_index_1][unknown_mask],
 plt.scatter(projected[:,PC_index_1][quasar_mask], 
             projected[:,PC_index_2][quasar_mask], s=1, c='orange',zorder=10)
 plt.scatter(projected[:,PC_index_1][redstar_mask], 
-            projected[:,PC_index_2][redstar_mask], s=1, c='red',zorder=10)
+            projected[:,PC_index_2][redstar_mask], s=1, c='blue',zorder=10)
 plt.scatter(projected[:,PC_index_1][star_mask], 
             projected[:,PC_index_2][star_mask], s=1, c='purple',zorder=10)
-plt.scatter(projected[:,PC_index_1], 
-            projected[:,PC_index_2], s=1, zorder=1)
+sc = plt.scatter(projected[:,PC_index_1], 
+            projected[:,PC_index_2], s=1, zorder=1, c=z, cmap='Reds')
+
+plt.colorbar(sc, label='redshift')  # Add colorbar with label
+
+plt.legend()
 plt.show()
 
 #%%
@@ -163,7 +169,7 @@ def reconstruct(PC_coords, eigenvectors, mean):
     '''
     
     
-    reconstructed = np.dot(PC_coords, eigenvectors[:n_comp, :])
+    reconstructed = np.dot(PC_coords, eigenvectors)
 
     reconstructed = reconstructed + mean
     
@@ -183,10 +189,12 @@ a = interesting[0] - avg_spectra
 #%%
 n_comp=1
 
-reconstructed = reconstruct(projected[:, :n_comp], ei_vecs[:n_comp, :], avg_spectra)
+useful_wls = np.sort(np.random.randint(0, 1000, size=100))[::-1]
+
+reconstructed = reconstruct(projected[:, :n_comp], ei_vecs[:n_comp, useful_wls], avg_spectra[useful_wls])
 
 
-plt.plot(wavelength, reconstructed.T, linewidth=0.2, alpha=0.5)
+plt.plot(wavelength[useful_wls], reconstructed.T, linewidth=0.2, alpha=0.5)
 plt.title('reconstructed data; '+ str(n_comp)+' PCs')
 plt.show()
 
