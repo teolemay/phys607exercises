@@ -187,14 +187,15 @@ plt.show()
 a = interesting[0] - avg_spectra
 
 #%%
-n_comp=1
+n_comp=2
 
-useful_wls = np.sort(np.random.randint(0, 1000, size=100))[::-1]
+number_of_wavelenghths = 50
+interesting_wls = np.sort(np.random.randint(0, 1000, size=number_of_wavelenghths))[::-1]
 
-reconstructed = reconstruct(projected[:, :n_comp], ei_vecs[:n_comp, useful_wls], avg_spectra[useful_wls])
+reconstructed = reconstruct(projected[:, :n_comp], ei_vecs[:n_comp, interesting_wls], avg_spectra[interesting_wls])
 
 
-plt.plot(wavelength[useful_wls], reconstructed.T, linewidth=0.2, alpha=0.5)
+plt.plot(wavelength[interesting_wls], reconstructed.T, linewidth=0.2, alpha=0.5)
 plt.title('reconstructed data; '+ str(n_comp)+' PCs')
 plt.show()
 
