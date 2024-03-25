@@ -76,24 +76,24 @@ variance_ratio = ei_vals / total_variance
 # Cumulative sum of eigenvalues normalized to unity
 cumulative_variance_ratio = np.cumsum(variance_ratio)
 
-# fig = plt.figure(figsize=(10, 7.5))
-# fig.subplots_adjust(hspace=0.05, bottom=0.12)
+fig = plt.figure(figsize=(10, 7.5))
+fig.subplots_adjust(hspace=0.05, bottom=0.12)
 
-# ax = fig.add_subplot(211, xscale='log', yscale='log')
-# ax.grid()
-# ax.plot(variance_ratio, c='k')
-# ax.set_ylabel('Normalized Eigenvalues')
-# ax.xaxis.set_major_formatter(plt.NullFormatter())
-# # ax.set_ylim(5E-4, 100)
+ax = fig.add_subplot(211, xscale='log', yscale='log')
+ax.grid()
+ax.plot(variance_ratio, c='k')
+ax.set_ylabel('Normalized Eigenvalues')
+ax.xaxis.set_major_formatter(plt.NullFormatter())
+# ax.set_ylim(5E-4, 100)
 
-# ax = fig.add_subplot(212)
-# ax.grid()
-# ax.semilogx(cumulative_variance_ratio, color='k')
-# ax.set_xlabel('Eigenvalue Number')
-# ax.set_ylabel('Cumulative Eigenvalues')
-# # ax.set_ylim(0.65, 1.00)
+ax = fig.add_subplot(212)
+ax.grid()
+ax.semilogx(cumulative_variance_ratio, color='k')
+ax.set_xlabel('Eigenvalue Number')
+ax.set_ylabel('Cumulative Eigenvalues')
+# ax.set_ylim(0.65, 1.00)
 
-# plt.show()
+plt.show()
 
 
 plt.figure(figsize=(10, 6))
